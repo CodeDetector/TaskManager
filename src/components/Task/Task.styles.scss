@@ -1,0 +1,17 @@
+.task-container{
+    padding: 3px,3px,3px,30px;
+    width: 70%;
+    display: inline-block;
+    // justify-content: space-around;
+    border:2px;
+    margin: 20px 2px 2px 20px;
+    background-color: blue;
+    border-color: black;
+    .task-name{
+        width:30%;
+    }
+    .timer{
+        display:inline-flex;
+        width:70%;
+        // justify-content: space-between;
+}}

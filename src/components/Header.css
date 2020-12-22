@@ -1,0 +1,37 @@
+.header {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+.Name{
+    height: 100%;
+    width:100%;
+    font-size: 30px;
+    padding-top: 25px;
+    text-align: left;
+    /* text-align: center; */
+}
+.logo-container {
+    height: 100%;
+    width: 70px;
+    padding-top: 25px;
+  }
+
+.SignIn_SignUp
+{
+    display:flex;
+    justify-content: space-between;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+.SignIn_SignUp .option{
+    width: 100%;
+    white-space: nowrap;
+    height: 60%;
+    margin:20px;
+}
