@@ -1,0 +1,32 @@
+.header {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    align-items: center;
+
+    .logo-container {
+        height: 100%;
+        width: 100px;
+        margin-left: 20px;
+        padding-top: 25px;
+    }
+    .Name{
+        height: 100%;
+        width:100%;
+        font-size: 30px;
+        padding-top: 25px;
+        text-align: left;
+        /* text-align: center; */
+    }
+    .options {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: large;
+        .option{
+            padding: 10px 15px;
+        }}}

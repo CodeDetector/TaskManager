@@ -1,7 +1,7 @@
 import React from 'react'
 // import Button from '@material-ui/core/Button';
 import logo from '../assets/logo.svg'
-import './Header.css'
+import './Header.scss'
 import {withRouter,Link} from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import {selectCurrentUser} from '../redux/user/user.selectors'
@@ -20,7 +20,7 @@ const Header=({currentuser,clearBoard})=>{
             <div className="Name">
                 Task Manager
             </div>
-            <div className="SignIn_SignUp">
+            <div className="options">
             {
                         currentuser?
                       <div className="option" onClick={()=>{auth.signOut();clearBoard()}} style={{cursor:'pointer'}}>Sign Out</div>:

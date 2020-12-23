@@ -11,7 +11,5 @@ export const removetaskfromDb=(prevCards,cardtoRemoveId)=>{
     return(
         prevCards.filter(card=>card.id!==cardtoRemoveId)
     )}
-    // const collectionRef = firestore.doc(`user/${auth.currentUser.uid}`).collection("tasks");
-
 }
 

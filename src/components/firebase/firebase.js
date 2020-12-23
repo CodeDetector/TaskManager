@@ -43,7 +43,7 @@ var firebaseConfig = {
   }
   export const removetasksfromdb=(task)=>{
     const collectionRef = firestore.doc(`users/${auth.currentUser.uid}`).collection("tasks");
-    collectionRef.get().then((querySnapshot)=>querySnapshot.forEach(documentQuery=>console.log(documentQuery.data())))
+    // collectionRef.get().then((querySnapshot)=>querySnapshot.forEach(documentQuery=>console.log(documentQuery.data())))
   }
  firebase.initializeApp(firebaseConfig);
   export const auth=firebase.auth();

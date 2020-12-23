@@ -23,12 +23,14 @@ constructor(props)
     this.startTimer=this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.getTime = this.getTime.bind(this);
+    this.generateId = this.generateId.bind(this);
 }
 handleChange(event){
     this.setState({
         value:event.target.value
     });
-}   startTimer=()=>{
+}
+  startTimer=()=>{
     this.setState(state=>({
       ...state,
       start:Math.floor(Date.now()/1000),
@@ -40,6 +42,9 @@ handleChange(event){
             time:Math.floor(Date.now()/1000)- this.state.start
     })), 1000);
 }
+generateId=()=>{
+  return(Math.random().toString(36).substr(2,9))
+}
 stopTimer=()=>{
   this.setState(state=>({
     ...state,
@@ -47,8 +52,7 @@ stopTimer=()=>{
     iscompleted:true
   }))
   clearInterval(this.timer);
-  let s = {id:this.props.counter,time:this.state.time,name:this.state.value}
-  console.log(s);
+  let s = {id:this.generateId(),time:this.state.time,name:this.state.value}
   this.props.addtask(s);
   addtaskstodb(s);
   this.props.hidetask();
