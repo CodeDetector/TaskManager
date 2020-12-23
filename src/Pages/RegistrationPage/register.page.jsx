@@ -4,6 +4,7 @@ import CustomButton from '../../components/customButton/customButton.component'
 import './register.styles.css'
 import {auth} from '../../components/firebase/firebase'
 import createUserProfileDocument from '../../components/firebase/firebase'
+import { Link, Redirect } from 'react-router-dom'
 
 class Register extends React.Component{
     constructor()
@@ -87,7 +88,8 @@ class Register extends React.Component{
                     label='Confirm Password' 
                     required>
                     </FormInput>
-                    <CustomButton type="submit">Sign Up</CustomButton>
+                    <Link to="/signin">Already have an account? SignIn</Link>
+                    <CustomButton type="submit" >Sign Up</CustomButton>
                 </form>
             </div>
         )

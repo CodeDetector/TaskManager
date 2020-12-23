@@ -7,7 +7,8 @@ import CustomButton from '../../components/customButton/customButton.component'
 import { clearBoard } from '../../redux/cart/cart.actions'
 // import Timer from "../../components/Task/Task.container"
 
-const Home=({hidden,tasks,clearBoard,dispatch})=>{
+const Home=({hidden,tasks,clearBoard})=>{
+    
         return(
             <div className="Home">
                 <div className="firstBlock">
@@ -17,6 +18,7 @@ const Home=({hidden,tasks,clearBoard,dispatch})=>{
                 </div>
                 {hidden?null:<Task/>}
                 <div className="tasks">
+                    
                     {tasks.map(task=>
                         <Card id={task.id} time={task.time} name={task.name}/>
                     )}
@@ -27,7 +29,8 @@ const Home=({hidden,tasks,clearBoard,dispatch})=>{
 const mapstatetoprops=(state)=>{
     return(
        {hidden:state.cart.hidden,
-       tasks:state.cart.tasks}
+       tasks:state.cart.tasks,
+    }
     )
 }
 const mapDispatchtoProps=(dispatch)=>(

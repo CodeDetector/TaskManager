@@ -6,6 +6,7 @@ import { addtask,hidetask } from '../../redux/cart/cart.actions';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import {addtaskstodb} from '../firebase/firebase'
 
 class Task extends React.Component{
 constructor(props)
@@ -39,16 +40,17 @@ handleChange(event){
             time:Math.floor(Date.now()/1000)- this.state.start
     })), 1000);
 }
-stopTimer=(timeElapsed)=>{
+stopTimer=()=>{
   this.setState(state=>({
     ...state,
     isOn:false,
     iscompleted:true
   }))
   clearInterval(this.timer);
-  let s = {id:this.props.counter,time:timeElapsed,name:this.state.value}
+  let s = {id:this.props.counter,time:this.state.time,name:this.state.value}
   console.log(s);
   this.props.addtask(s);
+  addtaskstodb(s);
   this.props.hidetask();
 }
 
@@ -65,7 +67,7 @@ getTime=()=>{
     seconds = seconds%60;
     if(minutes<60)
     {return minutes.toString()+":"+seconds.toString();}
-    return hours.toString()+" hrs "+minutes.toString()+" min "+seconds.toString()+" sec ";
+    return hours.toString()+" hrs : "+minutes.toString()+" min : "+seconds.toString()+" sec ";
   }
 } 
 render()
@@ -81,7 +83,7 @@ render()
                 <Grid item xs={4} direction="row" style={{display:"flex",justifyContent:"space-around"}}>
                     <TextField value={timeElapsed}/>
                     <Button variant="contained" color="primary" onClick={this.startTimer} disabled={isOn||iscompleted} style={{margin:"5px",padding:"2px"}}> Start </Button>
-                    <Button variant="contained" color="secondary" onClick={this.stopTimer(timeElapsed)} disabled={!isOn||iscompleted} style={{margin:"2px"}} type="submit">Complete</Button>
+                    <Button variant="contained" color="secondary" onClick={this.stopTimer} disabled={!isOn||iscompleted} style={{margin:"2px"}} type="submit">Complete</Button>
                 </Grid>
         </Grid>
         </Paper>

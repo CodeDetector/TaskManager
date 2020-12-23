@@ -1,7 +1,8 @@
 import './App.css';
 import React from 'react';
 import Header from './components/Header'
-import {Route,Redirect,Switch} from 'react-router-dom'
+import {Route,Redirect,Switch,withRouter} from 'react-router-dom'
+import Homepage from './Pages/Home/Home.page'
 import Home from './Pages/HomePage/HomePage'
 import SignIn from './Pages/SignInPage/SignInPage';
 import Register from './Pages/RegistrationPage/register.page'
@@ -15,22 +16,22 @@ import { createStructuredSelector } from 'reselect';
 class App extends React.Component {
   
   unsubscribeFromAuth=null;
-
+  user = null;
   componentDidMount(){
     const {setCurrentUser}=this.props;
     // console.log("Mounted");
     this.unsubscribefromAuth=auth.onAuthStateChanged(async userAuth=>{
      if(userAuth)
      { 
-      //  console.log(userAuth);
        const userRef=CreateUserProfileDocument(userAuth);
+       this.user = userRef;
       //  console.log(userAuth)
        (await userRef).onSnapshot(snapshot=>{
           setCurrentUser({
               id:snapshot.id,
               ...snapshot.data()
             })
-            console.log(snapshot);
+            console.log("This is the snapshot ",snapshot);
         })      
      }
      else
@@ -41,6 +42,7 @@ class App extends React.Component {
   }
 
   componentWillUnmount(){
+    console.log("Unmounted");
     this.unsubscribeFromAuth();
   }
 
@@ -50,9 +52,10 @@ class App extends React.Component {
         <div className="Header">
           <Header/>
         <Switch>
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/" component={Homepage}/>
+          <Route exact path="/dashboard" component={Home}/>
           {/* <Route exact path="/login"component={Login}/> */}
-          <Route exact path="/signIn" component={SignIn}/>
+          <Route exact path="/signIn" render={()=>this.props.currentUser?<Redirect to="/dashboard"/>:<SignIn/>}/>
           <Route exact path="/register" component={Register}/>
         </Switch>
         </div>
@@ -72,4 +75,4 @@ const mapDispatchToProps=dispatch=>{
     } 
   )
 }
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));
