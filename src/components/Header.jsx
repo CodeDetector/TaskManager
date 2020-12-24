@@ -2,7 +2,7 @@ import React from 'react'
 // import Button from '@material-ui/core/Button';
 import logo from '../assets/logo.svg'
 import './Header.scss'
-import {withRouter,Link} from 'react-router-dom';
+import {withRouter,Link, Redirect} from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import {selectCurrentUser} from '../redux/user/user.selectors'
 import { connect } from 'react-redux';
@@ -23,7 +23,7 @@ const Header=({currentuser,clearBoard})=>{
             <div className="options">
             {
                         currentuser?
-                      <div className="option" onClick={()=>{auth.signOut();clearBoard()}} style={{cursor:'pointer'}}>Sign Out</div>:
+                      <div className="option" onClick={()=>{auth.signOut();clearBoard();}} style={{cursor:'pointer'}}>Sign Out</div>:
                       <div className="SignIn_SignUp"> 
                       <Link className="option" to='/signin' style={{textDecoration:'none',color:'inherit',cursor:'pointer'}}>Sign In</Link>
                       <Link className="option" to="/register" style={{textDecoration:'none',color:'inherit',cursor:"pointer"}}>Sign Up</Link>

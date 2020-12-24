@@ -31,7 +31,7 @@ const useStyles = makeStyles({
                 <TableRow key={task.id}>
                   <TableCell>{tasks.indexOf(task)+1}</TableCell>
                   <TableCell component="th" scope="row">{task.name}</TableCell>
-                  <TableCell align="right">{task.time}</TableCell>
+                  <TableCell align="right" style={{fontSize:"20px",fontWeight:"bold"}}>{task.time}</TableCell>
                   {/* {console.log("Task is : ",task)} */}
                   <TableCell align="right">{<Button color="secondary" onClick={()=>removetask(task.id)}>Delete</Button>}</TableCell>
                 </TableRow>

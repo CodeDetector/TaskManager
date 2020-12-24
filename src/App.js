@@ -31,11 +31,13 @@ class App extends React.Component {
               id:snapshot.id,
               ...snapshot.data()
             })
-            console.log("This is the snapshot ",snapshot);
-        })      
+            console.log("This is the snapshot ",snapshot.data());
+        })  
+            
      }
      else
      {
+       
       setCurrentUser(userAuth);
      }
     })
@@ -53,7 +55,7 @@ class App extends React.Component {
           <Header/>
         <Switch>
           <Route exact path="/" component={Homepage}/>
-          <Route exact path="/dashboard" component={Home}/>
+          <Route exact path="/dashboard" component={Home} render={()=>this.props.currentUser?<Home/>:alert("Please SignIn first")}/>
           {/* <Route exact path="/login"component={Login}/> */}
           <Route exact path="/signIn" render={()=>this.props.currentUser?<Redirect to="/dashboard"/>:<SignIn/>}/>
           <Route exact path="/register" component={Register}/>
