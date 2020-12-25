@@ -12,6 +12,7 @@ import {connect} from 'react-redux'
 import { setCurrentUser} from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
+import Chart from './Pages/Chart/chart.page'
 
 class App extends React.Component {
   
@@ -33,11 +34,10 @@ class App extends React.Component {
             })
             console.log("This is the snapshot ",snapshot.data());
         })  
-            
+         
      }
      else
      {
-       
       setCurrentUser(userAuth);
      }
     })
@@ -55,10 +55,11 @@ class App extends React.Component {
           <Header/>
         <Switch>
           <Route exact path="/" component={Homepage}/>
-          <Route exact path="/dashboard" component={Home} render={()=>this.props.currentUser?<Home/>:alert("Please SignIn first")}/>
+          <Route exact path="/dashboard" render={()=>this.props.currentUser?<Home/>:<Homepage/>}/>
           {/* <Route exact path="/login"component={Login}/> */}
           <Route exact path="/signIn" render={()=>this.props.currentUser?<Redirect to="/dashboard"/>:<SignIn/>}/>
-          <Route exact path="/register" component={Register}/>
+          <Route exact path="/register"  render={()=>this.props.currentUser?<Redirect to="/dashboard"/>:<Register/>}/>
+          <Route exact path="/chart" component={Chart} />
         </Switch>
         </div>
       </div>
@@ -73,7 +74,7 @@ const mapStateToProps=createStructuredSelector({
 const mapDispatchToProps=dispatch=>{
   return(
     {
-      setCurrentUser:(user)=>dispatch(setCurrentUser(user))
+      setCurrentUser:(user)=>{dispatch(setCurrentUser(user))},
     } 
   )
 }

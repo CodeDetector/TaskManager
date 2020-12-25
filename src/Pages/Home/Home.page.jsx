@@ -9,7 +9,7 @@ const Homepage=()=>{
     height: '100vh',
     backgroundImage: `url(${Background})`,
     backgroundSize: 'cover',
-    overflow:'hidden'
+    overflow_y:'hidden'
     };
     return(
         <div className="Home" style={divStyle}>

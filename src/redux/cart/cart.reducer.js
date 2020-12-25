@@ -37,7 +37,14 @@ const cartReducer=(state=initialState,action)=>{
                     ...state,
                     hidden:true
                 }
-            )            
+            )  
+        case CardActionType.GET_TASKS:
+            return(
+                {
+                    ...state,
+                    tasks:action.payload
+                }
+            )              
         default: 
                 return{
                     ...state

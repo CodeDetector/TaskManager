@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {addtaskstodb} from '../firebase/firebase'
+import moment from 'moment'
 
 
 class Task extends React.Component{
@@ -31,9 +32,12 @@ handleChange(event){
     });
 }
   startTimer=()=>{
+    var a = moment().local().toObject();
+    console.log(a);
     this.setState(state=>({
       ...state,
       start:Math.floor(Date.now()/1000),
+      startTime:a,
       isOn:true
     }))
     
@@ -41,6 +45,7 @@ handleChange(event){
             ...state,
             time:Math.floor(Date.now()/1000)- this.state.start
     })), 1000);
+    
 }
 generateId=()=>{
   return(Math.random().toString(36).substr(2,9))
@@ -66,16 +71,21 @@ getTime=()=>{
     time = hours.toString()+" hrs : "+minutes.toString()+" min : "+seconds.toString()+" sec "
     return time;
   }
-} 
+}
+
 stopTimer=()=>{
+  var a = moment().local().toObject();
   this.setState(state=>({
     ...state,
     isOn:false,
+    endTime:a,
     iscompleted:true
   }))
   clearInterval(this.timer);
   let showTime = this.getTime();
-  let s = {id:this.generateId(),time:showTime,name:this.state.value}
+  // const {hours,minutes,seconds} = this.state.startTime;
+  // console.log(hours)
+  let s = {id:this.generateId(),time:showTime,name:this.state.value,seconds:this.state.time}
   this.props.addtask(s);
   addtaskstodb(s);
   this.props.hidetask();
