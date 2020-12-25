@@ -21,3 +21,8 @@ export const createtask=(count)=>({
 export const hidetask=()=>({
         type:CardActionType.HIDE_TASK
 })
+
+export const getTasks=(tasks)=>({
+        type:CardActionType.GET_TASKS,
+        payload:tasks
+})

@@ -3,5 +3,6 @@ export const CardActionType={
     REMOVE_CARD:'removetask',
     CLEAR_BOARD:'clearBoard',
     CREATE_TASK:'createtask',
-    HIDE_TASK:'hidetask'
+    HIDE_TASK:'hidetask',
+    GET_TASKS:'getTasks'
 }

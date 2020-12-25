@@ -1,7 +1,8 @@
 import './App.css';
 import React from 'react';
 import Header from './components/Header'
-import {Route,Redirect,Switch} from 'react-router-dom'
+import {Route,Redirect,Switch,withRouter} from 'react-router-dom'
+import Homepage from './Pages/Home/Home.page'
 import Home from './Pages/HomePage/HomePage'
 import SignIn from './Pages/SignInPage/SignInPage';
 import Register from './Pages/RegistrationPage/register.page'
@@ -11,27 +12,29 @@ import {connect} from 'react-redux'
 import { setCurrentUser} from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
+import Chart from './Pages/Chart/chart.page'
 
 class App extends React.Component {
   
   unsubscribeFromAuth=null;
-
+  user = null;
   componentDidMount(){
     const {setCurrentUser}=this.props;
     // console.log("Mounted");
     this.unsubscribefromAuth=auth.onAuthStateChanged(async userAuth=>{
      if(userAuth)
      { 
-      //  console.log(userAuth);
        const userRef=CreateUserProfileDocument(userAuth);
+       this.user = userRef;
       //  console.log(userAuth)
        (await userRef).onSnapshot(snapshot=>{
           setCurrentUser({
               id:snapshot.id,
               ...snapshot.data()
             })
-            console.log(snapshot);
-        })      
+            console.log("This is the snapshot ",snapshot.data());
+        })  
+         
      }
      else
      {
@@ -41,6 +44,7 @@ class App extends React.Component {
   }
 
   componentWillUnmount(){
+    console.log("Unmounted");
     this.unsubscribeFromAuth();
   }
 
@@ -50,10 +54,12 @@ class App extends React.Component {
         <div className="Header">
           <Header/>
         <Switch>
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/" component={Homepage}/>
+          <Route exact path="/dashboard" render={()=>this.props.currentUser?<Home/>:<Homepage/>}/>
           {/* <Route exact path="/login"component={Login}/> */}
-          <Route exact path="/signIn" component={SignIn}/>
-          <Route exact path="/register" component={Register}/>
+          <Route exact path="/signIn" render={()=>this.props.currentUser?<Redirect to="/dashboard"/>:<SignIn/>}/>
+          <Route exact path="/register"  render={()=>this.props.currentUser?<Redirect to="/dashboard"/>:<Register/>}/>
+          <Route exact path="/chart" component={Chart} />
         </Switch>
         </div>
       </div>
@@ -68,8 +74,8 @@ const mapStateToProps=createStructuredSelector({
 const mapDispatchToProps=dispatch=>{
   return(
     {
-      setCurrentUser:(user)=>dispatch(setCurrentUser(user))
+      setCurrentUser:(user)=>{dispatch(setCurrentUser(user))},
     } 
   )
 }
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

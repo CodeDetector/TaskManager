@@ -13,20 +13,17 @@ var firebaseConfig = {
     measurementId: "G-PY3SK1CPEG"
   };
 
- const createUserProfileDocument=async (userAuth,otherAdditionalDetails,tasks)=>{
-    if(!userAuth){
-      console.log("No user");
-      return};
-      console.log("User is present")
+ const createUserProfileDocument=async (userAuth,otherAdditionalDetails)=>{
+    if(!userAuth)
+      return;
     const userRef=firestore.doc(`users/${userAuth.uid}`);
-    console.log(userRef);
-    const userSnapShot=await userRef.get(); 
+    const userSnapShot=userRef.get(); 
     console.log(userSnapShot);
     if(!userSnapShot.exists){
       const {displayName,email}=userAuth;
       const createdAt=new Date();
       try{
-        await userRef.set({
+          userRef.set({
           displayName,
           email,
           createdAt,
@@ -38,27 +35,22 @@ var firebaseConfig = {
       }
       return userRef;
   }
-  const mapstatetoprops=(state)=>{
-    return({
-      tasks:state.cart.tasks
-    })
+  export const addtaskstodb=async (task)=>{
+    const collectionRef = firestore.doc(`users/${auth.currentUser.uid}`).collection("tasks"); 
+    const newdoc = collectionRef.doc().set(task);
+    collectionRef.get().then((querySnapshot)=>querySnapshot.forEach(documentQuery=>console.log(documentQuery.data())))
+    // await console.log(collectionRef.get());
   }
- 
+  export const removetasksfromdb=(task)=>{
+    const collectionRef = firestore.doc(`users/${auth.currentUser.uid}`).collection("tasks");
+    // collectionRef.get().then((querySnapshot)=>querySnapshot.forEach(documentQuery=>console.log(documentQuery.data())))
+  }
  firebase.initializeApp(firebaseConfig);
   export const auth=firebase.auth();
   export const firestore=firebase.firestore();
+  // export const collectionRef = firestore.doc(`users/${auth.currentUser.uid}`).collection("tasks"); 
   const provider=new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({prompt:'select_account'})
-  export const SignInwithGoogle=()=>auth.signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // console.log(token);
-    // The signed-in user info.
-    var user = result.user;
-    // console.log(user);
-    // ...
-  }).catch(function(error) {
-    console.log(error);
-  });
-connect(mapstatetoprops)(createUserProfileDocument);
+  export const SignInwithGoogle=()=>auth.signInWithPopup(provider);
+
 export default createUserProfileDocument;
